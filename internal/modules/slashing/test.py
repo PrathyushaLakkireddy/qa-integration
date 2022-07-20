@@ -1,16 +1,19 @@
 import time, logging
-from core.keys import keys_show
+import unittest
 from modules.slashing.tx import (
     tx_unjail,
 )
 
 logging.basicConfig(format="%(message)s", level=logging.DEBUG)
 
-# unjain tx
-status, send_tx = tx_unjail("validator1")
-if not status:
-    logging.error(f"unjain tx status:: {status}")
-else:
-    logging.info(f"tx_hash of unjail :: {send_tx['txhash']}")
+class TestStakingModuleTxsQueries(unittest.TestCase):
 
-time.sleep(3)
+    def test_unjain_tx(self):
+        # unjain tx
+        status, send_tx = tx_unjail("validator1")
+        self.assertTrue(status)
+        time.sleep(3)
+
+if __name__ == "__main__":
+    logging.info("INFO: running slashing module tests")
+    unittest.main()
